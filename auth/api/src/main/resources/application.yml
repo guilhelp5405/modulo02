@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: "${MONGODB_URI:mongodb://localhost:27017/mydatabase}"
+      auto-index-creation: true
+security:
+    jwt:
+        secret-key: "${JWT_SECRET:default_jwt_secret_key_1234567890abc}"
+        expiration-time-in-seconds: "${JWT_EXPIRATION:3600}"
