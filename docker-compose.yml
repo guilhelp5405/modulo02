@@ -1,0 +1,25 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+  gateway:
+    build: api-gateway-jwt/
+    ports:
+      - "8080:8080"
+    environment:
+      - JWT_SECRET=my_super_secret_jwt_key_9876543210xyz
+      - AUTH_URL=http://auth:8080
+      - PRIVADO_URL=http://privado:8080
+  auth:
+    build: auth/
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/auth
+      - JWT_SECRET=my_super_secret_jwt_key_9876543210xyz
+      - JWT_EXPIRATION=3600
+    depends_on:
+      - mongodb
+  privado:
+    build: privado

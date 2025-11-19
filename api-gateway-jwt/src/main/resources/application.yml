@@ -1,0 +1,17 @@
+security:
+  jwt:
+    secret-key: "${JWT_SECRET:default_jwt_secret_key_1234567890abc}"
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth
+              uri: "${AUTH_URL}"
+              predicates:
+                - Path=/auth/**
+            - id: privado
+              uri: "${PRIVADO_URL}"
+              predicates:
+                - Path=/privado/**
